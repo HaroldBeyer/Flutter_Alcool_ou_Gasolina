@@ -10,36 +10,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Color _color = Colors.deepPurple;
   var _gasCtrl = new MoneyMaskedTextController();
-
   var _alcCtrl = new MoneyMaskedTextController();
-
   var _busy = false;
-
   var _completed = false;
-
   var _resultText = "Compensa utilizar álcool";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: ListView(
-        children: <Widget>[
-          Logo(),
-          _completed
-              ? Success(
-                  reset: reset,
-                  result: _resultText,
-                )
-              : SubmitForm(
-                  alcCtrl: _alcCtrl,
-                  gasCtrl: _gasCtrl,
-                  submitFunc: calculate,
-                  busy: _busy,
-                ),
-        ],
-      ),
+      body: AnimatedContainer(
+          duration: Duration(milliseconds: 1200),
+          color: _color,
+          child: ListView(
+            children: <Widget>[
+              Logo(),
+              _completed
+                  ? Success(
+                      reset: reset,
+                      result: _resultText,
+                    )
+                  : SubmitForm(
+                      alcCtrl: _alcCtrl,
+                      gasCtrl: _gasCtrl,
+                      submitFunc: calculate,
+                      busy: _busy,
+                    ),
+            ],
+          )),
     );
   }
 
@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     double res = alc / gas;
 
     setState(() {
+      _color = Colors.deepPurpleAccent;
       _completed = false;
       _busy = true;
     });
@@ -75,6 +76,7 @@ class _HomePageState extends State<HomePage> {
       _gasCtrl = new MoneyMaskedTextController();
       _completed = false;
       _busy = false;
+      _color = Colors.deepPurple;
     });
   }
 }
